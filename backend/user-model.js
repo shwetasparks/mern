@@ -1,4 +1,5 @@
 const mongoose=require('mongoose');
+const jwt=require('jsonwebtoken')
 
 
 const userSchema=new mongoose.Schema({
@@ -25,8 +26,18 @@ isAdmin:{
 }
 )
 
-//jsonwebtoken 
-userSchema.methods.generateToken= function(){
+//jsonwebtoken *************
+userSchema.methods.generateToken= async function(){
+    try {
+        return jwt.sign({
+            userId:this._toString(),
+            email:this.email,
+            isAdmin:this.isAdmin,
+        }, process.env.JWT_SECRET,{expiresIn:"30d"})
+        
+    } catch (error) {
+        console.log(error)
+    }
 
 }
 

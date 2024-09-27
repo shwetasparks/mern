@@ -39,7 +39,10 @@ const register=async(req,res)=>{
         
         //if not exist then create a user
        const newUser= await User.create({username,email,password:hashPassword,phone})
-        res.status(201).json({ message: "User created successfully",token: await newUser.generateToken()});
+
+       //converting _id to string ensures consistenccy an compatability across dfferent jwt libraries.
+       //jwt token are mostly represened in strings.
+        res.status(201).json({ message: "User created successfully",token: await newUser.generateToken(), userId:newUser._id.toString()});
 
 
     } catch (error) {
