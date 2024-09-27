@@ -1,5 +1,5 @@
 const User=require("./user-model");
-
+const bcrypt=require('bcrypt');
 
 
 const home=async(req ,res)=>{
@@ -39,7 +39,7 @@ const register=async(req,res)=>{
         
         //if not exist then create a user
        const newUser= await User.create({username,email,password:hashPassword,phone})
-        res.status(201).json({ message: "User created successfully", user: newUser });
+        res.status(201).json({ message: "User created successfully",token: await newUser.generateToken()});
 
 
     } catch (error) {

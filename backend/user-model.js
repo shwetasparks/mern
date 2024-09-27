@@ -25,5 +25,12 @@ isAdmin:{
 }
 )
 
+
+
 const User=new mongoose.model('User',userSchema)
 module.exports=User;
+
+
+//jsonwebtoken: authentication and authorizartion
+//header,payload ,signature
+//server assigned in cookies
